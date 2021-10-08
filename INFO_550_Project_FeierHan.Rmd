@@ -1,0 +1,91 @@
+---
+title: "INFO550_Project_FeierHan"
+author: "Feier"
+date: "2021/9/23"
+output: 
+ html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE)
+```
+
+```{r}
+#library
+#library(openxlsx)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(corrgram)
+
+#path
+setwd("D:/Emory University/2021_Fall/INFO 550 Data Science Toolkit/Homework")
+```
+
+```{r}
+# read data
+#dat1<-read.xlsx( "2008.xlsx")
+dat1<-read.csv("SmokingAndTobaccoData2008.csv",fileEncoding = "UTF-8") %>% mutate(Year=2008)
+dat2<-read.csv("SmokingAndTobaccoData2010.csv",fileEncoding = "UTF-8") %>% mutate(Year=2010)
+dat3<-read.csv("SmokingAndTobaccoData2012.csv",fileEncoding = "UTF-8") %>% mutate(Year=2012)
+dat4<-read.csv("SmokingAndTobaccoData2014.csv",fileEncoding = "UTF-8") %>% mutate(Year=2014)
+dat5<-read.csv("SmokingAndTobaccoData2016.csv",fileEncoding = "UTF-8") %>% mutate(Year=2016)
+
+#dar 6 has different variable and different names, just ignore it right now
+#dat6<-read.csv("SmokingAndTobaccoData2018.csv") %>% mutate(Year=2018)
+
+```
+
+```{r}
+
+data<-rbind(dat1,dat2,dat3,dat4,dat5)
+
+```
+
+```{r}
+data1 <- data %>%
+          separate(CigaretteSmokingPrevalence,into = c("cig_smoke"),sep = " ") %>%
+          separate(TobaccoSmokingPrevalence,into = c("toba_smoke"),sep = " ") %>%
+          separate(TobaccoUsePrevalance,into = c("toba_use"),sep = " ") %>%
+          mutate(cig_smoke = as.numeric(cig_smoke),
+                 toba_smoke = as.numeric(toba_smoke),
+                 toba_use = as.numeric(toba_use)) %>%
+          filter(Location != "C")
+```
+
+## Cigarette and Tobacco
+
+### Distribution of cigarette smoking, tobacco smoking and tobacco use prevalence
+
+-   Distribution of cigarette and tobacco prevalence are similar
+
+```{r}
+par(mfrow=c(1,3))
+hist(data1$cig_smoke,main = "cigarette smoking prevalence")
+hist(data1$toba_smoke,main = "tobacco smoking prevalence")
+hist(data1$toba_use,main = "tobacco use prevalence")
+
+```
+
+### Correlation between cigarette and tobacco prevalence
+
+-   Correlations are between **0.71-0.87**, which is relatively high
+
+-   Clearly there is a positive association between cigarette and tobacco prevalence
+
+```{r}
+
+corrgram(data1[,2:4],lower.panel = panel.shade,upper.panel = panel.cor)
+```
+
+## Further Analysis
+
+### Goal
+
+1.  Investigate the association between scope of regulation on smoke-free environment and the prevalence of smoking
+
+2.  Investigate the association between Treatment In Health Facilities and the prevalence of smoking
+
+3.  Identify the most effective smoke-free environment regulation
