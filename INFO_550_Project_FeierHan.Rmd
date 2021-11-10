@@ -9,42 +9,51 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE,include=FALSE)
 ```
 
-```{r}
+```{r, warning=FALSE}
 #library
 #library(openxlsx)
 library(dplyr)
 library(tidyr)
 library(stringr)
 library(corrgram)
+library(here)
+library(table1)
 
 #path
-setwd("D:/Emory University/2021_Fall/INFO 550 Data Science Toolkit/Homework")
+here::i_am("INFO_550_Project_FeierHan.Rmd")
+# run the R code from the root directory
+#knitr::opts_knit$set(root.dir = here::here("INFO_550_Project_FeierHan.Rmd"))
 ```
 
 ```{r}
 # read data
 #dat1<-read.xlsx( "2008.xlsx")
-dat1<-read.csv("SmokingAndTobaccoData2008.csv",fileEncoding = "UTF-8") %>% mutate(Year=2008)
-dat2<-read.csv("SmokingAndTobaccoData2010.csv",fileEncoding = "UTF-8") %>% mutate(Year=2010)
-dat3<-read.csv("SmokingAndTobaccoData2012.csv",fileEncoding = "UTF-8") %>% mutate(Year=2012)
-dat4<-read.csv("SmokingAndTobaccoData2014.csv",fileEncoding = "UTF-8") %>% mutate(Year=2014)
-dat5<-read.csv("SmokingAndTobaccoData2016.csv",fileEncoding = "UTF-8") %>% mutate(Year=2016)
+dat1<-read.csv(here("SmokingAndTobaccoData2008.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2008)
+dat2<-read.csv(here("SmokingAndTobaccoData2010.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2010)
+dat3<-read.csv(here("SmokingAndTobaccoData2012.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2012)
+dat4<-read.csv(here("SmokingAndTobaccoData2014.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2014)
+dat5<-read.csv(here("SmokingAndTobaccoData2016.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2016)
 
 #dar 6 has different variable and different names, just ignore it right now
-#dat6<-read.csv("SmokingAndTobaccoData2018.csv") %>% mutate(Year=2018)
+#dat6<-read.csv(here("SmokingAndTobaccoData2018.csv")) %>% mutate(Year=2018)
 
 ```
 
 ```{r}
-
+dat1$Year = 2008
+dat2$Year = 2010
+dat3$Year = 2012
+dat4$Year = 2014
+dat5$Year = 2016
 data<-rbind(dat1,dat2,dat3,dat4,dat5)
 
 ```
 
 ```{r}
+# data cleaning
 data1 <- data %>%
           separate(CigaretteSmokingPrevalence,into = c("cig_smoke"),sep = " ") %>%
           separate(TobaccoSmokingPrevalence,into = c("toba_smoke"),sep = " ") %>%
@@ -52,8 +61,30 @@ data1 <- data %>%
           mutate(cig_smoke = as.numeric(cig_smoke),
                  toba_smoke = as.numeric(toba_smoke),
                  toba_use = as.numeric(toba_use)) %>%
-          filter(Location != "C")
+          filter(Location != "C") 
+          
+label(data1$cig_smoke) <- "Cigarette Smoking Prevalence"
+label(data1$toba_smoke) <- "Tobacco Smoking Prevalence"
+label(data1$toba_use) <- "Tobacco Use Prevalance"
+
+#save data
+write.csv(data1,here("INFO550_HW4_data", na = ""))
+       
 ```
+
+## Summary Table
+
+```{r}
+table1 <- table1 ( ~ cig_smoke + toba_smoke + toba_use | Year, 
+                   data = data1, overall = F,
+                  # extra.col = list("P-value" = pvalue)
+                 )
+table1
+
+#save table
+#write.table(table1,"")
+```
+
 
 ## Cigarette and Tobacco
 
@@ -62,11 +93,13 @@ data1 <- data %>%
 -   Distribution of cigarette and tobacco prevalence are similar
 
 ```{r}
+jpeg('figure1.jpg')
 par(mfrow=c(1,3))
 hist(data1$cig_smoke,main = "cigarette smoking prevalence")
 hist(data1$toba_smoke,main = "tobacco smoking prevalence")
 hist(data1$toba_use,main = "tobacco use prevalence")
 
+dev.off()
 ```
 
 ### Correlation between cigarette and tobacco prevalence
@@ -76,8 +109,9 @@ hist(data1$toba_use,main = "tobacco use prevalence")
 -   Clearly there is a positive association between cigarette and tobacco prevalence
 
 ```{r}
-
+jpeg('figure2.jpg')
 corrgram(data1[,2:4],lower.panel = panel.shade,upper.panel = panel.cor)
+dev.off()
 ```
 
 ## Further Analysis
