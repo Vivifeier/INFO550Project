@@ -10,7 +10,7 @@ INFO 550 Project
 
 ## Package
   Required packges include:dpyr, tidyr, stringr, corrgram, here, table1, etc.
-  They could by installed by the following instructions.
+  They could by installed by the following instructions:
   
 ```
 install.packages("dpyr")
@@ -25,6 +25,6 @@ install.packages("table1")
 ## Execute the analysis
 To execute the analysis, from the project folder you can run
 ```
-Rscript -e "rmarkdown::render('report.Rmd')"
+Rscript -e "rmarkdown::render('INFO_550_Project_FeierHan.Rmd')"
 ```
 This will create a file called report.html output in your directory that contains the results.
