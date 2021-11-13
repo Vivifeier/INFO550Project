@@ -1,5 +1,5 @@
 ---
-title: "INFO550_Project_FeierHan"
+title: "INFO550_Report_FeierHan"
 author: "Feier"
 date: "2021/9/23"
 output: 
@@ -9,10 +9,10 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,warning = FALSE,include=FALSE)
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE)
 ```
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, include = F}
 #library
 #library(openxlsx)
 library(dplyr)
@@ -43,16 +43,8 @@ dat5<-read.csv(here("SmokingAndTobaccoData2016.csv"),fileEncoding = "UTF-8") %>%
 ```
 
 ```{r}
-dat1$Year = 2008
-dat2$Year = 2010
-dat3$Year = 2012
-dat4$Year = 2014
-dat5$Year = 2016
 data<-rbind(dat1,dat2,dat3,dat4,dat5)
 
-```
-
-```{r}
 # data cleaning
 data1 <- data %>%
           separate(CigaretteSmokingPrevalence,into = c("cig_smoke"),sep = " ") %>%
@@ -68,7 +60,7 @@ label(data1$toba_smoke) <- "Tobacco Smoking Prevalence"
 label(data1$toba_use) <- "Tobacco Use Prevalance"
 
 #save data
-write.csv(data1,here("INFO550_HW4_data", na = ""))
+write.csv(data1,here("INFO550_HW4_data.csv", na = ""))
        
 ```
 
@@ -91,8 +83,14 @@ table1
 ### Distribution of cigarette smoking, tobacco smoking and tobacco use prevalence
 
 -   Distribution of cigarette and tobacco prevalence are similar
-
 ```{r}
+par(mfrow=c(1,3))
+hist(data1$cig_smoke,main = "cigarette smoking prevalence")
+hist(data1$toba_smoke,main = "tobacco smoking prevalence")
+hist(data1$toba_use,main = "tobacco use prevalence")
+```
+
+```{r,include= F}
 jpeg('figure1.jpg')
 par(mfrow=c(1,3))
 hist(data1$cig_smoke,main = "cigarette smoking prevalence")
@@ -109,6 +107,10 @@ dev.off()
 -   Clearly there is a positive association between cigarette and tobacco prevalence
 
 ```{r}
+corrgram(data1[,2:4],lower.panel = panel.shade,upper.panel = panel.cor)
+```
+
+```{r,include= F}
 jpeg('figure2.jpg')
 corrgram(data1[,2:4],lower.panel = panel.shade,upper.panel = panel.cor)
 dev.off()
