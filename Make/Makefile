@@ -1,22 +1,22 @@
 
 # rule for making report 
-report:Rmd_Report/INFO_550_Project_FeierHan.Rmd  Figure/Figure1.jpg
-	Rscript -e "rmarkdown::render('Rmd_Report/INFO_550_Project_FeierHan.Rmd', quiet = TRUE)"
+report:Make/INFO_550_Project_FeierHan.Rmd  Make/Figure/Figure1.jpg Make/Figure/Figure2.jpg
+	Rscript -e "rmarkdown::render('Make/INFO_550_Project_FeierHan.Rmd', quiet = TRUE)"
 
 # rule for cleaning data
-data/INFO550_HW4_data.csv: R/INFO550_DataClean.R data/vaccination-data.csv   
-	chmod +x R/INFO550_DataClean.R  && \
-	Rscript R/INFO550_DataClean.R 
+Make/INFO550_HW4_data.csv: Make/INFO550_DataClean.R Dataset/SmokingAndTobaccoData2008.csv Dataset/SmokingAndTobaccoData2010.csv Dataset/SmokingAndTobaccoData2012.csv Dataset/SmokingAndTobaccoData2014.csv Dataset/SmokingAndTobaccoData2016.csv 
+	chmod +x Make/INFO550_DataClean.R  && 
+	Rscript Make/INFO550_DataClean.R 
 
 # rule for ploting the figure1
-figure/Figure1.jpg: R/INFO550_Figure1.R data/INFO550_HW4_data.csv
-	chmod +x R/INFO550_Figure1.R && \
-	Rscript R/INFO550_Figure1.R
+Make/Figure/Figure1.jpg: Make/INFO550_Figure1.R Make/INFO550_HW4_data.csv
+	chmod +x Make/INFO550_Figure1.R && \
+	Rscript Make/INFO550_Figure1.R
 
 # rule for ploting the figure2
-figure/Figure2.jpg: R/INFO550_Figure2.R data/INFO550_HW4_data.csv
-	chmod +x R/INFO550_Figure2.R && \
-	Rscript R/INFO550_Figure2.R
+Make/Figure/Figure2.jpg: Make/INFO550_Figure2.R Make/INFO550_HW4_data.csv
+	chmod +x Make/INFO550_Figure2.R && \
+	Rscript Make/INFO550_Figure2.R
   
 
 .PHONY: report
@@ -26,4 +26,5 @@ figure/Figure2.jpg: R/INFO550_Figure2.R data/INFO550_HW4_data.csv
 help:
 		@echo "report: Generate final analysis report."
 		@echo "INFO550_HW4_data.csv: process raw data."
-		@echo "Figure1.jpg: Make a map plot of vaccines acorss countries."
+		@echo "Figure1.jpg: Distribution of tobacco useage and smoking usage."
+		@echo "Figure2.jpg: correlation between tobacco use and smoking behavior."
