@@ -7,15 +7,15 @@ library(stringr)
 
 
 #path
-here::i_am("INFO550_DataClean.R")
+here::i_am("Make/INFO550_DataClean.R")
 
 
 # read data
-dat1<-read.csv(here("SmokingAndTobaccoData2008.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2008)
-dat2<-read.csv(here("SmokingAndTobaccoData2010.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2010)
-dat3<-read.csv(here("SmokingAndTobaccoData2012.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2012)
-dat4<-read.csv(here("SmokingAndTobaccoData2014.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2014)
-dat5<-read.csv(here("SmokingAndTobaccoData2016.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2016)
+dat1<-read.csv(here("Dataset/SmokingAndTobaccoData2008.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2008)
+dat2<-read.csv(here("Dataset/SmokingAndTobaccoData2010.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2010)
+dat3<-read.csv(here("Dataset/SmokingAndTobaccoData2012.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2012)
+dat4<-read.csv(here("Dataset/SmokingAndTobaccoData2014.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2014)
+dat5<-read.csv(here("Dataset/SmokingAndTobaccoData2016.csv"),fileEncoding = "UTF-8") %>% mutate(Year=2016)
 
 # combine the data and add variable Year accordinglY
 data<-rbind(dat1,dat2,dat3,dat4,dat5)
@@ -36,4 +36,4 @@ label(data1$toba_smoke) <- "Tobacco Smoking Prevalence"
 label(data1$toba_use) <- "Tobacco Use Prevalance"
 
 #save data
-write.csv(data1,here("INFO550_HW4_data.csv", na = ""))
+write.csv(data1,here("Make/INFO550_HW4_data.csv", na = ""))
