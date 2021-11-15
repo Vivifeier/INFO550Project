@@ -5,7 +5,7 @@ report:Make/INFO_550_Project_FeierHan.Rmd  Make/Figure/Figure1.jpg Make/Figure/F
 
 # rule for cleaning data
 Make/INFO550_HW4_data.csv: Make/INFO550_DataClean.R Dataset/SmokingAndTobaccoData2008.csv Dataset/SmokingAndTobaccoData2010.csv Dataset/SmokingAndTobaccoData2012.csv Dataset/SmokingAndTobaccoData2014.csv Dataset/SmokingAndTobaccoData2016.csv 
-	chmod +x Make/INFO550_DataClean.R  && 
+	chmod +x Make/INFO550_DataClean.R  && \
 	Rscript Make/INFO550_DataClean.R 
 
 # rule for ploting the figure1
