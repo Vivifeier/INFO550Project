@@ -26,6 +26,7 @@ install.packages("table1")
 ```
 ## Pull the image from Dockerhub to local
 docker pull feierhan/info550:feier-hw5
+docker run -it feierhan/info550:feier-hw5 /bin/bash
 ```
 
 ## Execute the analysis
