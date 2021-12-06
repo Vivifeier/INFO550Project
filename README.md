@@ -58,7 +58,7 @@ cd project
 make report
 
 # exit the docker container
-exit
+#exit
 ```
 
 ### 5. Examine the report locally
