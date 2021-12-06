@@ -31,7 +31,7 @@ if(!require(renv)){
   require(renv)
 }
 ```
-IF the 'renv' package was installked
+IF the 'renv' package was installed already
 ```
 renv::restore()
 
