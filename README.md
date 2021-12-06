@@ -22,12 +22,6 @@ install.packages("table1")
 ## Goal
   The method I assume would be applicable is linear regression, the output of the analysis will include the association between cigarettes or tobacca prevalence between treatment in health facilities or regulations on smoking behavior. I will conduct my analysis by R, including packages like ggplot2, tidyverse.
   
-## Docker Image
-```
-## Pull the image from Dockerhub to local
-docker pull feierhan/info550:feier-hw5
-docker run -it feierhan/info550:feier-hw5 /bin/bash
-```
 
 ## Execute the analysis
 
@@ -35,8 +29,16 @@ docker run -it feierhan/info550:feier-hw5 /bin/bash
 ```
 git clone https://github.com/Vivifeier/INFO550Project/tree/HW5
 ```
+### 2. Docker Image
+```
+## Pull the image from Dockerhub to local
+docker pull feierhan/info550:feier-hw5
 
-### 2. Mount the output to local directory
+## Pull the image from Dockerhub to local
+docker run -it feierhan/info550:feier-hw5 /bin/bash
+```
+
+### 3. Mount the output to local directory
 ```
 # create a local directory for mounting
 mkdir {your_pwd}/output
@@ -47,7 +49,7 @@ cd {your_pwd}/INFO550Project-HW5
 docker run -v {your_pwd}/output:/project/output -it feierhan/info550:feier-hw5
 ```
 
-### 3. Produce the result
+### 4. Produce the result
 ```
 # go to the project folder under docker container
 cd project
@@ -59,9 +61,9 @@ make report
 exit
 ```
 
-### 4. Examine the report locally
+### 5. Examine the report locally
 
 The final report named 'INFO550_Project_FeierHan.html' that contain the results has been created in your local folder , which can be open with:
-
+```
 open {your_pwd}/output/INFO550_Project_FeierHan.html
 ```
