@@ -12,19 +12,45 @@ INFO 550 Project
   Required packges include:dpyr, tidyr, stringr, corrgram, here, table1, etc.
   They could by installed by the following instructions:
   
+## Goal
+  The method I assume would be applicable is linear regression, the output of the analysis will include the association between cigarettes or tobacca prevalence between treatment in health facilities or regulations on smoking behavior. I will conduct my analysis by R, including packages like ggplot2, tidyverse.
+
+## Execute the analysis
+
+### 1. Clone the project to local
+download or clone the files
 ```
+git clone https://github.com/Vivifeier/INFO550Project/tree/HW4
+```
+### 2. Envirnoment
+if you don't have the 'renv' package
+```
+R
+if(!require(renv)){
+  install.packages("renv")
+  require(renv)
+}
+```
+IF the 'renv' package was installked
+```
+renv::restore()
+
+## If the required R packages are already availble in your R, then you just need activate the R environment
+renv::activate()
+
+## If the process takes too much time, you could manually install the required packages
 install.packages("dpyr")
 install.packages("stringr")
 install.packages("corrgram")
 install.packages("here")
 install.packages("table1")
 ```
-## Goal
-  The method I assume would be applicable is linear regression, the output of the analysis will include the association between cigarettes or tobacca prevalence between treatment in health facilities or regulations on smoking behavior. I will conduct my analysis by R, including packages like ggplot2, tidyverse.
 
-## Execute the analysis
-To execute the analysis, from the project folder you can run
+### 3. Execute the analysis
 ```
-Rscript -e "rmarkdown::render('INFO_550_Project_FeierHan.Rmd')"
+# run the command below under the project directory
+make report
 ```
-This will create a file called report.html output in your directory that contains the results.
+This will create a file named INFO_550_Project_FeierHan.html in the same folder that contain the results, which can be open with:
+
+open ./Make/INFO_550_Project_FeierHan.html
